@@ -1,2 +1,3 @@
-# romantic-valentine-proposal-single-page-ui-with-evasive-no-and-meme-reveal
-Exported from Caffeine project: Romantic Valentine Proposal Single-Page UI with Evasive “No” and Meme Reveal
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

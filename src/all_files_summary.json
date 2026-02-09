@@ -1,0 +1,18 @@
+{
+  "backend/main.mo": "Defines an empty Motoko actor with no methods.",
+  "feature_evidence.json": "Lists feature evidence entries detailing required updates to YesTapSequence and related assets.",
+  "frontend-file-summaries.txt": "Contains prewritten summaries of all major frontend files and components.",
+  "frontend/index.css": "Defines global Tailwind styles and OKLCH color variables for light and dark modes.",
+  "frontend/index.html": "HTML entry bootstrap that loads the React app root and main script.",
+  "frontend/src/App.tsx": "Main app orchestrating password gating, proposal UI, evasive No button, and YesTapSequence display.",
+  "frontend/src/components/PasswordGate.tsx": "Password entry flow with animated welcome screen and validation against a fixed code.",
+  "frontend/src/components/RomanticSceneLayout.tsx": "Layout wrapper adding layered gradients and animated floating hearts around page content.",
+  "frontend/src/components/YesTapSequence.tsx": "Three‑step looping tap sequence with image preloading and keyboard accessibility.",
+  "frontend/src/hooks/useActor.ts": "Creates and manages an authenticated or anonymous backend actor with react-query.",
+  "frontend/src/hooks/useEvasiveNoButton.ts": "Provides a hook to position and reposition the No button randomly on hover or touch, keeping it far from the previous location.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Implements an Internet Identity context and provider for authentication with login, logout, and stored identity handling.",
+  "frontend/src/index.css": "Defines global Tailwind layers and custom CSS variables for a romantic-themed light/dark UI with background and animation utilities.",
+  "frontend/src/main.tsx": "Bootstraps the React app with React Query and the Internet Identity provider before rendering App.",
+  "frontend/tailwind.config.js": "Configures Tailwind theme extensions, custom colors tied to CSS variables, animations, and plugins.",
+  "project_state.json": "Stores project-wide metadata, requirements, issues, and architectural notes for the Valentine proposal app."
+}

@@ -1,0 +1,299 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 19,
+  "summary": "Single-page romantic Valentine proposal web page for Aqsa Kousar (iPad Chrome) with Yes/No interaction (evasive No), improved romantic background and button animations/styles, optional password-protected link gate (password: 9102008, hint: \"most happiest day of the life for me\"), plus a looping multi-step Yes flow where the images in the sequence can be replaced with newly provided pictures.",
+  "architectural_notes": [
+    "Use a self-contained HTML/CSS/JS single-page implementation compatible with iPad Chrome.",
+    "Add a password-protected link flow (tap link -> prompt for password with hint) before revealing the gated content.",
+    "Update the Yes-success view into a simple multi-step state machine (image1 -> image2 -> final text) driven by taps for iPad compatibility.",
+    "Update the Yes-success view state machine to be cyclic (image1 -> image2 -> final text -> image1) driven by taps for iPad compatibility.",
+    "Update the post-Yes state machine so the newly added image is step 1 (displayed immediately after Yes), followed by the existing step-2 image, then final text; tapping final text loops back to the new step-1 image.",
+    "In the post-Yes looping tap sequence, ensure the animated image is step 1 and the real photo is step 2.",
+    "Replace the final-step label/CTA text \"Replay\" with \"Tap again to love you more\".",
+    "Remove the unintended third image from the post-Yes tap-through/looping sequence so the sequence matches the desired steps only.",
+    "Preload/cache post-Yes sequence images up-front (or at least before first display) so switching steps on tap is instantaneous on iPad Chrome."
+  ],
+  "known_issues": [
+    "Post-Yes tap sequence currently shows 3 images; user wants the third image removed.",
+    "Post-Yes image transitions currently show loading delay; images should appear instantly on tap."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-create-a-single-page-romantic-valentine-proposal-ui-addressed-to-aqsa-kousar-that-asks-aqsa-kousar-will-you-be-my-valentine-and-presents-two-large-buttons-yes-and-no",
+      "title": "Create a single-page romantic Valentine proposal UI addressed to “Aqsa Kousar” that asks: “Aqsa Kousar, will you be my Valentine?” and presents two large buttons: “Yes” and “No”.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-no-button-as-evasive-when-the-pointer-hovers-enters-it-mouse-trackpad-or-the-user-attempts-to-tap-it-touch-it-should-move-to-a-new-position-within-the-viewport-so-it-is-difficult-impossible-to-click",
+      "title": "Implement the “No” button as evasive: when the pointer hovers/enters it (mouse/trackpad) or the user attempts to tap it (touch), it should move to a new position within the viewport so it is difficult/impossible to click.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-when-the-user-clicks-yes-transition-the-ui-to-a-success-view-that-displays-a-meme-style-image-containing-the-text-good-choice",
+      "title": "When the user clicks “Yes”, transition the UI to a success view that displays a meme-style image containing the text “Good choice”.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-consistent-romantic-theme-using-a-pink-and-white-color-scheme-including-typography-spacing-and-simple-romantic-styling-e-g-hearts-patterns-while-keeping-the-page-intentionally-minimal-and-focused-on-the-proposal-interaction",
+      "title": "Apply a consistent romantic theme using a pink and white color scheme, including typography, spacing, and simple romantic styling (e.g., hearts/patterns) while keeping the page intentionally minimal and focused on the proposal interaction.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-page-is-fully-usable-on-ipad-chrome-responsive-layout-large-tap-targets-and-no-interaction-that-depends-solely-on-hover",
+      "title": "Ensure the page is fully usable on iPad Chrome: responsive layout, large tap targets, and no interaction that depends solely on hover.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-generated-meme-image-to-the-frontend-as-a-static-asset-under-frontend-public-assets-generated-and-render-it-directly-from-the-frontend-do-not-serve-it-via-the-backend",
+      "title": "Add the generated meme image to the frontend as a static asset under frontend/public/assets/generated and render it directly from the frontend (do not serve it via the backend).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-password-gated-entry-step-that-appears-before-the-valentine-proposal-ui-the-page-should-initially-show-a-romantic-welcome-screen-containing-a-clearly-tappable-link-when-the-user-taps-the-link-prompt-for-a-password-and-only-reveal-the-existing-proposal-ui-after-the-correct-password-is-entered",
+      "title": "Add a password-gated entry step that appears before the Valentine proposal UI: the page should initially show a romantic welcome screen containing a clearly tappable link; when the user taps the link, prompt for a password and only reveal the existing proposal UI after the correct password is entered.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-password-prompt-ui-display-an-english-hint-text-exactly-hint-most-happiest-day-of-the-life-for-me-and-require-the-exact-password-value-9102008-to-unlock",
+      "title": "In the password prompt UI, display an English hint text exactly: \"Hint: Most happiest day of the life for me\" and require the exact password value \"9102008\" to unlock.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-romantic-background-styling-to-feel-more-romantic-while-keeping-the-page-minimal-and-readable-e-g-richer-layered-gradients-subtle-decorative-overlay-and-or-more-refined-floating-heart-treatment-for-both-the-gated-entry-step-and-the-existing-proposal-success-views",
+      "title": "Enhance the romantic background styling to feel more \"romantic\" while keeping the page minimal and readable (e.g., richer layered gradients, subtle decorative overlay, and/or more refined floating-heart treatment) for both the gated entry step and the existing proposal/success views.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-the-styling-and-animations-of-the-yes-and-no-buttons-update-their-visual-style-shape-borders-shadows-color-treatments-and-add-smoother-more-delightful-animations-for-tap-press-and-movement-including-the-evasive-no-button-s-repositioning",
+      "title": "Improve the styling and animations of the Yes and No buttons: update their visual style (shape, borders, shadows, color treatments) and add smoother, more delightful animations for tap/press and movement (including the evasive No button’s repositioning).",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-post-yes-flow-to-be-a-3-step-tap-through-sequence-1-immediately-show-the-first-uploaded-image-img-20260210-032555-590-jpg-when-the-user-clicks-taps-yes-2-when-the-user-taps-clicks-the-first-image-replace-it-with-the-second-uploaded-image-img-20260210-031107-923-jpg-3-when-the-user-taps-clicks-the-second-image-replace-it-with-the-final-message-text-i-love-you-soooooo-much-meri-cutiee",
+      "title": "Update the post-\"Yes\" flow to be a 3-step tap-through sequence: (1) immediately show the first uploaded image (IMG_20260210_032555_590.jpg) when the user clicks/taps \"Yes\"; (2) when the user taps/clicks the first image, replace it with the second uploaded image (IMG_20260210_031107_923.jpg); (3) when the user taps/clicks the second image, replace it with the final message text: \"I love you soooooo much meri cutiee🫂🌹🫀💍\".",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-both-uploaded-images-as-frontend-static-assets-and-render-them-directly-from-the-frontend-not-via-the-backend-preserving-their-filenames-img-20260210-032555-590-jpg-and-img-20260210-031107-923-jpg",
+      "title": "Add both uploaded images as frontend static assets and render them directly from the frontend (not via the backend), preserving their filenames: IMG_20260210_032555_590.jpg and IMG_20260210_031107_923.jpg.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-tap-through-image-sequence-is-ipad-chrome-friendly-large-tap-target-no-hover-dependence-images-responsive-fit-within-viewport-without-overflow-and-include-subtle-transition-animation-between-steps-e-g-fade-scale-while-keeping-the-romantic-theme-consistent",
+      "title": "Ensure the tap-through image sequence is iPad Chrome friendly: large tap target, no hover dependence, images responsive (fit within viewport without overflow), and include subtle transition/animation between steps (e.g., fade/scale) while keeping the romantic theme consistent.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-post-yes-tap-through-sequence-so-it-continuously-loops-show-the-first-image-then-the-second-image-then-the-final-message-text-and-when-the-user-taps-the-final-message-text-it-restarts-back-to-the-first-image-and-can-repeat-indefinitely-keep-the-step-order-as-img-20260210-032555-590-jpg-img-20260210-031107-923-jpg-final-message-text",
+      "title": "Update the post-\"Yes\" tap-through sequence so it continuously loops: show the first image, then the second image, then the final message text, and when the user taps the final message text it restarts back to the first image (and can repeat indefinitely). Keep the step order as: IMG_20260210_032555_590.jpg -> IMG_20260210_031107_923.jpg -> final message text.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-newly-provided-image-file-as-a-frontend-static-asset-and-make-it-the-first-image-shown-in-the-post-yes-looping-tap-sequence-before-the-existing-second-image-and-the-final-message-text-preserve-the-newly-provided-image-s-original-filename-exactly",
+      "title": "Add the newly provided image file as a frontend static asset and make it the first image shown in the post-\"Yes\" looping tap sequence (before the existing second image and the final message text). Preserve the newly provided image's original filename exactly.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-post-yes-looping-tap-sequence-yestapsequence-to-use-the-newly-uploaded-images-step-1-must-show-img-20260210-wa0000-jpg-step-2-must-show-img-20260210-wa0001-jpg-and-step-3-must-remain-the-existing-final-message-text-keep-the-looping-behavior-tapping-step-3-returns-to-step-1",
+      "title": "Update the post-\"Yes\" looping tap sequence (YesTapSequence) to use the newly uploaded images: step 1 must show \"IMG-20260210-WA0000.jpg\", step 2 must show \"IMG-20260210-WA0001.jpg\", and step 3 must remain the existing final message text. Keep the looping behavior (tapping step 3 returns to step 1).",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-post-yes-looping-tap-sequence-shows-the-animated-image-first-and-the-real-image-second-step-1-img-20260210-wa0000-jpg-step-2-img-20260210-wa0001-jpg-followed-by-the-existing-final-love-message-as-step-3-while-keeping-the-loop-behavior-tapping-step-3-returns-to-step-1",
+      "title": "Ensure the post-\"Yes\" looping tap sequence shows the animated image first and the real image second (Step 1: \"IMG-20260210-WA0000.jpg\"; Step 2: \"IMG-20260210-WA0001.jpg\"), followed by the existing final love message as Step 3, while keeping the loop behavior (tapping Step 3 returns to Step 1).",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-final-step-call-to-action-text-so-it-does-not-say-replay-anywhere-and-instead-displays-exactly-tap-again-to-love-you-more-update-any-related-accessibility-label-s-on-the-final-step-to-match-this-wording-in-english",
+      "title": "Replace the final-step call-to-action text so it does not say \"replay\" anywhere and instead displays exactly: \"Tap again to love you more\". Update any related accessibility label(s) on the final step to match this wording in English.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-post-yes-looping-tap-sequence-frontend-src-components-yestapsequence-tsx-so-the-first-step-displays-the-newly-uploaded-image-img-20260210-wa0002-jpg-as-the-first-image-shown-after-tapping-yes",
+      "title": "Update the post-\"Yes\" looping tap sequence (frontend/src/components/YesTapSequence.tsx) so the first step displays the newly uploaded image \"IMG-20260210-WA0002.jpg\" as the first image shown after tapping \"Yes\".",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-post-yes-looping-tap-sequence-component-frontend-src-components-yestapsequence-tsx-to-remove-the-third-image-step-so-the-sequence-contains-only-step-1-img-20260210-wa0002-jpg-step-2-img-20260210-wa0000-jpg-step-3-the-existing-final-love-message-text-keep-the-looping-behavior-so-tapping-the-final-message-returns-to-step-1",
+      "title": "Update the post-\"Yes\" looping tap sequence component (frontend/src/components/YesTapSequence.tsx) to remove the third image step so the sequence contains only: Step 1 = IMG-20260210-WA0002.jpg, Step 2 = IMG-20260210-WA0000.jpg, Step 3 = the existing final love message text. Keep the looping behavior so tapping the final message returns to Step 1.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-post-yes-tap-transitions-feel-instant-by-preloading-the-remaining-sequence-images-img-20260210-wa0002-jpg-and-img-20260210-wa0000-jpg-before-the-user-reaches-them-so-there-is-no-visible-loading-delay-when-the-user-taps-to-advance",
+      "title": "Ensure the post-\"Yes\" tap transitions feel instant by preloading the remaining sequence images (IMG-20260210-WA0002.jpg and IMG-20260210-WA0000.jpg) before the user reaches them, so there is no visible loading delay when the user taps to advance.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-unused-third-image-asset-from-the-frontend-public-assets-if-it-exists-img-20260210-wa0001-jpg-and-ensure-there-are-no-remaining-references-to-it-in-the-codebase",
+      "title": "Remove the unused third image asset from the frontend public assets if it exists (IMG-20260210-WA0001.jpg) and ensure there are no remaining references to it in the codebase.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create a simple romantic-themed interactive Valentine proposal page (pink/white) addressed to Aqsa Kousar, runnable in Chrome on iPad",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Implement Yes/No buttons where the No button moves away on hover to prevent clicking",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "On Yes click, display a meme image with the text \"Good choice\"",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Add a password gate when she taps a link; password is 9102008 with hint \"most happiest day of the life for me\"",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Enhance romantic background styling (more romantic background theme)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Improve animations for the Yes/No buttons and update button styling",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Change the Yes success flow to a tap-through sequence: show first image on Yes; when she taps the first image, show a second image; when she taps the second image, show the message \"I love you soooooo much meri cutiee\"",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Make the post-Yes tap-through sequence loop: tapping the final message returns to the first (animated) image, then second image, then final text again",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Use the newly provided image as the first image shown in the post-Yes tap-through loop (before the existing second image and final text)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Replace the pictures used in the post-Yes tap-through/looping sequence with newly provided images",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Add the newly uploaded images as frontend static assets (served directly from the frontend, not via the backend), preserving filenames exactly: \"IMG-20260210-WA0000.jpg\" and \"IMG-20260210-WA0001.jpg\".",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Update post-Yes looping sequence so Step 1 is the animated image and Step 2 is the real photo, and change the final-step CTA text from \"Replay\" to \"Tap again to love you more\"",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Add the uploaded image file \"IMG-20260210-WA0002.jpg\" to the frontend as a static asset (served directly by the frontend, not via the backend).",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Remove the third image from the post-Yes tap-through/looping sequence (only keep the intended images/steps)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Ensure post-Yes tap-through images appear instantly on tap by preloading/caching them (avoid visible loading delays)",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Romantic Valentine Proposal Single-Page UI with Evasive “No” and Meme Reveal",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

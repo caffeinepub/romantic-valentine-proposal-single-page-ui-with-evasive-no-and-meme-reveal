@@ -1,0 +1,228 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 1rem;
+        --background: 0.99 0.01 340;
+        --foreground: 0.2 0.05 340;
+        --card: 1 0 0;
+        --card-foreground: 0.2 0.05 340;
+        --popover: 1 0 0;
+        --popover-foreground: 0.2 0.05 340;
+        --primary: 0.65 0.22 350;
+        --primary-foreground: 1 0 0;
+        --secondary: 0.75 0.15 10;
+        --secondary-foreground: 0.3 0.08 10;
+        --muted: 0.95 0.02 340;
+        --muted-foreground: 0.5 0.05 340;
+        --accent: 0.95 0.03 340;
+        --accent-foreground: 0.3 0.08 340;
+        --destructive: 0.577 0.245 27.325;
+        --destructive-foreground: 0.985 0 0;
+        --border: 0.9 0.03 340;
+        --input: 0.9 0.03 340;
+        --ring: 0.65 0.22 350;
+        --chart-1: 0.646 0.222 41.116;
+        --chart-2: 0.6 0.118 184.704;
+        --chart-3: 0.398 0.07 227.392;
+        --chart-4: 0.828 0.189 84.429;
+        --chart-5: 0.769 0.188 70.08;
+        --sidebar: 0.985 0 0;
+        --sidebar-foreground: 0.145 0 0;
+        --sidebar-primary: 0.205 0 0;
+        --sidebar-primary-foreground: 0.985 0 0;
+        --sidebar-accent: 0.97 0 0;
+        --sidebar-accent-foreground: 0.205 0 0;
+        --sidebar-border: 0.922 0 0;
+        --sidebar-ring: 0.708 0 0;
+        
+        /* Custom romantic theme colors */
+        --romantic-primary: 0.65 0.22 350;
+        --romantic-primary-hover: 0.55 0.25 350;
+        --romantic-secondary: 0.75 0.15 10;
+        --romantic-dark: 0.3 0.08 340;
+        --romantic-muted: 0.5 0.05 340;
+    }
+
+    .dark {
+        --background: 0.2 0.05 340;
+        --foreground: 0.98 0.01 340;
+        --card: 0.25 0.05 340;
+        --card-foreground: 0.98 0.01 340;
+        --popover: 0.25 0.05 340;
+        --popover-foreground: 0.98 0.01 340;
+        --primary: 0.75 0.2 350;
+        --primary-foreground: 0.15 0.05 340;
+        --secondary: 0.35 0.08 340;
+        --secondary-foreground: 0.98 0.01 340;
+        --muted: 0.35 0.05 340;
+        --muted-foreground: 0.7 0.03 340;
+        --accent: 0.4 0.08 340;
+        --accent-foreground: 0.98 0.01 340;
+        --destructive: 0.704 0.191 22.216;
+        --destructive-foreground: 0.98 0.01 340;
+        --border: 0.35 0.05 340;
+        --input: 0.35 0.05 340;
+        --ring: 0.7 0.15 350;
+        --chart-1: 0.488 0.243 264.376;
+        --chart-2: 0.696 0.17 162.48;
+        --chart-3: 0.769 0.188 70.08;
+        --chart-4: 0.627 0.265 303.9;
+        --chart-5: 0.645 0.246 16.439;
+        --sidebar: 0.205 0 0;
+        --sidebar-foreground: 0.985 0 0;
+        --sidebar-primary: 0.488 0.243 264.376;
+        --sidebar-primary-foreground: 0.985 0 0;
+        --sidebar-accent: 0.269 0 0;
+        --sidebar-accent-foreground: 0.985 0 0;
+        --sidebar-border: 1 0 0 / 10%;
+        --sidebar-ring: 0.439 0 0;
+        
+        /* Custom romantic theme colors for dark mode */
+        --romantic-primary: 0.75 0.2 350;
+        --romantic-primary-hover: 0.65 0.22 350;
+        --romantic-secondary: 0.8 0.12 10;
+        --romantic-dark: 0.85 0.02 340;
+        --romantic-muted: 0.6 0.03 340;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+@layer utilities {
+    /* Romantic background overlay with subtle texture */
+    .romantic-overlay {
+        background-image: 
+            radial-gradient(circle at 20% 50%, oklch(0.85 0.15 350 / 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, oklch(0.85 0.12 10 / 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 40% 20%, oklch(0.9 0.1 340 / 0.06) 0%, transparent 40%);
+        animation: shimmer 8s ease-in-out infinite;
+    }
+
+    /* Smooth transition for evasive button */
+    .evasive-button-transition {
+        transition: left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                    top 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    transform 0.15s ease;
+    }
+
+    /* Press animation for buttons */
+    .button-press-animation:active {
+        animation: button-press 0.2s ease;
+    }
+
+    /* Fade in animation */
+    .animate-fade-in {
+        animation: fade-in 0.5s ease-out;
+    }
+
+    /* Fade and scale in animation for tap sequence */
+    .animate-fade-scale-in {
+        animation: fade-scale-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+}
+
+@layer components {
+    .romantic-background {
+        position: relative;
+    }
+}
+
+@keyframes shimmer {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes button-press {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.92);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes float-slow {
+    0%, 100% {
+        transform: translateY(0px) translateX(0px) rotate(0deg);
+        opacity: 0.6;
+    }
+    25% {
+        transform: translateY(-20px) translateX(10px) rotate(5deg);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-30px) translateX(-5px) rotate(-3deg);
+        opacity: 0.5;
+    }
+    75% {
+        transform: translateY(-15px) translateX(-10px) rotate(4deg);
+        opacity: 0.7;
+    }
+}
+
+@keyframes float-medium {
+    0%, 100% {
+        transform: translateY(0px) translateX(0px) rotate(0deg);
+        opacity: 0.5;
+    }
+    33% {
+        transform: translateY(-25px) translateX(-8px) rotate(-4deg);
+        opacity: 0.7;
+    }
+    66% {
+        transform: translateY(-15px) translateX(12px) rotate(6deg);
+        opacity: 0.6;
+    }
+}
+
+@keyframes float-fast {
+    0%, 100% {
+        transform: translateY(0px) translateX(0px) rotate(0deg);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translateY(-35px) translateX(8px) rotate(-5deg);
+        opacity: 0.8;
+    }
+}

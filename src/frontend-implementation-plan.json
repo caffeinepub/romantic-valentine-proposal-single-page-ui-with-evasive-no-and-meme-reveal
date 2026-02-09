@@ -1,0 +1,61 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Simplify Yes tap sequence and preload images for instant transitions",
+  "requirements": [
+    {
+      "id": "REQ-22",
+      "summary": "Remove the third post-\"Yes\" image step so the sequence is: WA0002 image → WA0000 image → final love message text, and keep looping + keyboard accessibility.",
+      "acceptanceCriteria": [
+        "After tapping \"Yes\", the user sees IMG-20260210-WA0002.jpg first.",
+        "On tap, the next step shows IMG-20260210-WA0000.jpg.",
+        "On tap, the next step shows the final love message text (no third image is shown anywhere in the sequence).",
+        "On tap of the final message step, the sequence loops back to IMG-20260210-WA0002.jpg and can repeat indefinitely.",
+        "Keyboard accessibility remains functional (Enter/Space advances; final step loops)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/YesTapSequence.tsx",
+          "operation": "modify",
+          "description": "Update the step logic and rendering to remove the IMG-20260210-WA0001.jpg step, leaving only two image steps (Step 1: /assets/IMG-20260210-WA0002.jpg, Step 2: /assets/IMG-20260210-WA0000.jpg) followed by the existing final love message text as the last step; keep looping behavior so tapping the final message returns to Step 1. Ensure keyboard accessibility works for the sequence (Enter/Space advances and loops on the final step), e.g., by making each step focusable and handling keydown consistently."
+        }
+      ]
+    },
+    {
+      "id": "REQ-23",
+      "summary": "Preload the two remaining sequence images to make tap transitions feel instant (no visible loading delay).",
+      "acceptanceCriteria": [
+        "On a normal iPad Chrome connection, tapping to advance between steps does not show a blank/loading state while the next image downloads.",
+        "Both images are requested early (e.g., during/after entering the success view) so the next step displays immediately on tap.",
+        "No new backend endpoints or network calls are introduced for image delivery (images remain static frontend assets)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/YesTapSequence.tsx",
+          "operation": "modify",
+          "description": "Add client-side preloading for /assets/IMG-20260210-WA0002.jpg and /assets/IMG-20260210-WA0000.jpg (e.g., via an effect on component mount that creates Image objects or equivalent) so both images are requested as soon as the post-\"Yes\" view is entered and transitions between steps show immediately without a blank/loading state."
+        }
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "summary": "Remove the unused third image asset (IMG-20260210-WA0001.jpg) from public assets (if present) and eliminate any remaining code references.",
+      "acceptanceCriteria": [
+        "There are no code references to /assets/IMG-20260210-WA0001.jpg.",
+        "If IMG-20260210-WA0001.jpg exists under the frontend public assets, it is removed from the project so it is no longer shipped."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/IMG-20260210-WA0001.jpg",
+          "operation": "delete",
+          "description": "Remove the unused third sequence image asset from the shipped frontend public assets if it exists."
+        },
+        {
+          "path": "frontend/src/components/YesTapSequence.tsx",
+          "operation": "modify",
+          "description": "Remove any remaining references to /assets/IMG-20260210-WA0001.jpg in the post-\"Yes\" tap sequence so the third image is not used anywhere."
+        }
+      ]
+    }
+  ]
+}

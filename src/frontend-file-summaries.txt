@@ -1,0 +1,10 @@
+{
+  "frontend/src/App.tsx": "Main application component that orchestrates the password gate, proposal question, and now uses YesTapSequence for the success view with state management for unlock and acceptance flows.",
+  "frontend/src/hooks/useEvasiveNoButton.ts": "Enhanced evasive button hook that manages smooth animated position changes with minimum distance constraints to prevent repetitive nearby positions and improved boundary detection.",
+  "frontend/src/index.css": "Global styles with romantic OKLCH color palette, custom animations including new fade-scale-in for tap sequence transitions, floating hearts, evasive button transitions, and romantic background overlay.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with romantic color tokens and custom keyframe animations for floating hearts at three different speeds (slow/medium/fast) with rotation and opacity variations.",
+  "frontend/index.html": "HTML entry point with updated title for the Valentine proposal page.",
+  "frontend/src/components/PasswordGate.tsx": "Password gate component that displays a welcome screen with tappable unlock button, then shows a password prompt with hint \"Most happiest day of the life for me\" requiring exact match on \"9102008\".",
+  "frontend/src/components/RomanticSceneLayout.tsx": "Reusable romantic scene layout wrapper providing layered gradient backgrounds, decorative overlay with shimmer effect, and floating animated hearts visible without hover for all views.",
+  "frontend/src/components/YesTapSequence.tsx": "A tap-through component that displays three sequential steps in a continuous loop: the couple illustration (IMG-20260210-WA0002.jpg) as step 1, the animated image (IMG-20260210-WA0000.jpg) as step 2, and the final love message as step 3, with preloading for instant transitions and full keyboard accessibility."
+}

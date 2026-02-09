@@ -1,0 +1,76 @@
+{
+  "kind": "build_request",
+  "title": "Remove third post-Yes image and preload images for instant tap transitions",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-22",
+      "text": "Update the post-\"Yes\" looping tap sequence component (frontend/src/components/YesTapSequence.tsx) to remove the third image step so the sequence contains only: Step 1 = IMG-20260210-WA0002.jpg, Step 2 = IMG-20260210-WA0000.jpg, Step 3 = the existing final love message text. Keep the looping behavior so tapping the final message returns to Step 1.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "There are 3 images delete the third one"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After tapping \"Yes\", the user sees IMG-20260210-WA0002.jpg first.",
+        "On tap, the next step shows IMG-20260210-WA0000.jpg.",
+        "On tap, the next step shows the final love message text (no third image is shown anywhere in the sequence).",
+        "On tap of the final message step, the sequence loops back to IMG-20260210-WA0002.jpg and can repeat indefinitely.",
+        "Keyboard accessibility remains functional (Enter/Space advances; final step loops)."
+      ]
+    },
+    {
+      "id": "REQ-23",
+      "text": "Ensure the post-\"Yes\" tap transitions feel instant by preloading the remaining sequence images (IMG-20260210-WA0002.jpg and IMG-20260210-WA0000.jpg) before the user reaches them, so there is no visible loading delay when the user taps to advance.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "and also it should not load it should come quickly as she taps"
+        ]
+      },
+      "acceptanceCriteria": [
+        "On a normal iPad Chrome connection, tapping to advance between steps does not show a blank/loading state while the next image downloads.",
+        "Both images are requested early (e.g., during/after entering the success view) so the next step displays immediately on tap.",
+        "No new backend endpoints or network calls are introduced for image delivery (images remain static frontend assets)."
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "text": "Remove the unused third image asset from the frontend public assets if it exists (IMG-20260210-WA0001.jpg) and ensure there are no remaining references to it in the codebase.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "delete the third one"
+        ]
+      },
+      "acceptanceCriteria": [
+        "There are no code references to /assets/IMG-20260210-WA0001.jpg.",
+        "If IMG-20260210-WA0001.jpg exists under the frontend public assets, it is removed from the project so it is no longer shipped."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not edit any files under frontend/src/components/ui or any other frontend immutablePaths listed in SYSTEM_CONTEXT.",
+    "Keep the backend as a single Motoko actor; no backend changes are required for this request.",
+    "Keep all user-facing text in English."
+  ],
+  "nonGoals": [
+    "Changing the password gate behavior or password value.",
+    "Changing the proposal screen (Yes/No) behavior.",
+    "Adding new images or altering the romantic theme beyond what is required to remove the third image and improve perceived loading speed."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}
