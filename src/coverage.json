@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-09T23:44:46.918Z",
+  "generatedAt": "2026-02-10T00:10:54.339Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -11,38 +11,42 @@
     "implemented": 3,
     "items": [
       {
-        "id": "REQ-22",
-        "summary": "Update the post-\"Yes\" looping tap sequence component (frontend/src/components/YesTapSequence.tsx) to remove the third image step so the sequence contains only: Step 1 = IMG-20260210-WA0002.jpg, Step 2 = IMG-20260210-WA0000.jpg, Step 3 = the existing final love message text. Keep the looping behavior so tapping the final message returns to Step 1.",
+        "id": "REQ-27",
+        "summary": "Add an in-app “Copy Share Link” action that copies a clean URL for sharing by removing the “#caffeineAdminToken=…” fragment (and any other hash content) from the current page URL before copying.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/YesTapSequence.tsx"
+          "frontend/src/utils/shareLink.ts",
+          "frontend/src/components/CopyShareLinkAction.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/YesTapSequence.tsx"
+          "frontend/src/utils/shareLink.ts",
+          "frontend/src/components/CopyShareLinkAction.tsx"
         ]
       },
       {
-        "id": "REQ-23",
-        "summary": "Ensure the post-\"Yes\" tap transitions feel instant by preloading the remaining sequence images (IMG-20260210-WA0002.jpg and IMG-20260210-WA0000.jpg) before the user reaches them, so there is no visible loading delay when the user taps to advance.",
+        "id": "REQ-28",
+        "summary": "Surface the “Copy Share Link” action in a clearly accessible place on all main app screens (PasswordGate view, proposal view, and YesTapSequence view) without interfering with existing tap-to-advance interactions.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/YesTapSequence.tsx"
+          "frontend/src/components/RomanticSceneLayout.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/YesTapSequence.tsx"
+          "frontend/src/components/RomanticSceneLayout.tsx"
         ]
       },
       {
-        "id": "REQ-24",
-        "summary": "Remove the unused third image asset from the frontend public assets if it exists (IMG-20260210-WA0001.jpg) and ensure there are no remaining references to it in the codebase.",
+        "id": "REQ-29",
+        "summary": "If the current URL contains “caffeineAdminToken” in the hash fragment, display a small non-blocking notice in English informing the user that the current link is an admin link and they should use “Copy Share Link” to share a safe link.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/public/assets/IMG-20260210-WA0001.jpg",
-          "frontend/src/components/YesTapSequence.tsx"
+          "frontend/src/hooks/useAdminLinkNotice.ts",
+          "frontend/src/components/AdminLinkNotice.tsx",
+          "frontend/src/components/RomanticSceneLayout.tsx"
         ],
         "matchedFiles": [
-          "frontend/public/assets/IMG-20260210-WA0001.jpg",
-          "frontend/src/components/YesTapSequence.tsx"
+          "frontend/src/hooks/useAdminLinkNotice.ts",
+          "frontend/src/components/AdminLinkNotice.tsx",
+          "frontend/src/components/RomanticSceneLayout.tsx"
         ]
       }
     ]
@@ -52,8 +56,11 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/public/assets/IMG-20260210-WA0001.jpg",
-    "frontend/src/components/YesTapSequence.tsx",
+    "frontend/src/components/AdminLinkNotice.tsx",
+    "frontend/src/components/CopyShareLinkAction.tsx",
+    "frontend/src/components/RomanticSceneLayout.tsx",
+    "frontend/src/hooks/useAdminLinkNotice.ts",
+    "frontend/src/utils/shareLink.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

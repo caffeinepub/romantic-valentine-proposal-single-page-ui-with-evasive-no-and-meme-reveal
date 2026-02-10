@@ -1,76 +1,87 @@
 {
   "kind": "build_request",
-  "title": "Remove third post-Yes image and preload images for instant tap transitions",
+  "title": "Add in-app share link that strips the caffeineAdminToken fragment",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-22",
-      "text": "Update the post-\"Yes\" looping tap sequence component (frontend/src/components/YesTapSequence.tsx) to remove the third image step so the sequence contains only: Step 1 = IMG-20260210-WA0002.jpg, Step 2 = IMG-20260210-WA0000.jpg, Step 3 = the existing final love message text. Keep the looping behavior so tapping the final message returns to Step 1.",
+      "id": "REQ-27",
+      "text": "Add an in-app “Copy Share Link” action that copies a clean URL for sharing by removing the “#caffeineAdminToken=…” fragment (and any other hash content) from the current page URL before copying.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "recent-messages"
         ],
         "quotes": [
-          "There are 3 images delete the third one"
+          "https://aqsuuu-meri-jaaan-ilvu-50c.caffeine.xyz/#caffeineAdminToken=ab6d750cdc80ef9ad843df3b6fdd933869db692441f4c6bcad554d95d8ea129d give me a shorter link to this",
+          "I want you to make changes"
         ]
       },
       "acceptanceCriteria": [
-        "After tapping \"Yes\", the user sees IMG-20260210-WA0002.jpg first.",
-        "On tap, the next step shows IMG-20260210-WA0000.jpg.",
-        "On tap, the next step shows the final love message text (no third image is shown anywhere in the sequence).",
-        "On tap of the final message step, the sequence loops back to IMG-20260210-WA0002.jpg and can repeat indefinitely.",
-        "Keyboard accessibility remains functional (Enter/Space advances; final step loops)."
+        "When the app is opened with a URL containing a hash fragment like “#caffeineAdminToken=…”, the “Copy Share Link” action copies the same URL without any hash fragment (e.g., “https://…/”).",
+        "The “Copy Share Link” action works on iPad Chrome (touch) and desktop browsers.",
+        "After copying, the UI shows a brief confirmation message in English (e.g., “Link copied”).",
+        "The copied link does not include the caffeineAdminToken value."
       ]
     },
     {
-      "id": "REQ-23",
-      "text": "Ensure the post-\"Yes\" tap transitions feel instant by preloading the remaining sequence images (IMG-20260210-WA0002.jpg and IMG-20260210-WA0000.jpg) before the user reaches them, so there is no visible loading delay when the user taps to advance.",
+      "id": "REQ-28",
+      "text": "Surface the “Copy Share Link” action in a clearly accessible place on all main app screens (PasswordGate view, proposal view, and YesTapSequence view) without interfering with existing tap-to-advance interactions.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "recent-messages"
         ],
         "quotes": [
-          "and also it should not load it should come quickly as she taps"
+          "I want you to make changes"
         ]
       },
       "acceptanceCriteria": [
-        "On a normal iPad Chrome connection, tapping to advance between steps does not show a blank/loading state while the next image downloads.",
-        "Both images are requested early (e.g., during/after entering the success view) so the next step displays immediately on tap.",
-        "No new backend endpoints or network calls are introduced for image delivery (images remain static frontend assets)."
+        "A user can find and use “Copy Share Link” from the PasswordGate screen, the main proposal screen, and the YesTapSequence screen.",
+        "The control does not block or capture taps intended for the YesTapSequence step-advance area (tapping the sequence content still advances as before).",
+        "All user-facing labels for this control are in English and accessible (button has an aria-label that matches visible text)."
       ]
     },
     {
-      "id": "REQ-24",
-      "text": "Remove the unused third image asset from the frontend public assets if it exists (IMG-20260210-WA0001.jpg) and ensure there are no remaining references to it in the codebase.",
+      "id": "REQ-29",
+      "text": "If the current URL contains “caffeineAdminToken” in the hash fragment, display a small non-blocking notice in English informing the user that the current link is an admin link and they should use “Copy Share Link” to share a safe link.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "recent-messages"
         ],
         "quotes": [
-          "delete the third one"
+          "https://aqsuuu-meri-jaaan-ilvu-50c.caffeine.xyz/#caffeineAdminToken=ab6d750cdc80ef9ad843df3b6fdd933869db692441f4c6bcad554d95d8ea129d"
         ]
       },
       "acceptanceCriteria": [
-        "There are no code references to /assets/IMG-20260210-WA0001.jpg.",
-        "If IMG-20260210-WA0001.jpg exists under the frontend public assets, it is removed from the project so it is no longer shipped."
+        "When “caffeineAdminToken” is present in the URL hash, a notice is shown on screen; when it is not present, the notice is not shown.",
+        "The notice text is in English and does not reveal or display the token value.",
+        "The notice does not prevent interaction with existing UI controls (password entry, Yes/No buttons, tap-through sequence)."
       ]
     }
   ],
   "constraints": [
-    "Do not edit any files under frontend/src/components/ui or any other frontend immutablePaths listed in SYSTEM_CONTEXT.",
-    "Keep the backend as a single Motoko actor; no backend changes are required for this request.",
-    "Keep all user-facing text in English."
+    "Frontend immutable paths must not be edited: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
+    "Do not introduce any backend dependency for link generation/copying; this must be handled entirely in the frontend.",
+    "Do not include or display the caffeineAdminToken value in any user-facing text or UI."
   ],
   "nonGoals": [
-    "Changing the password gate behavior or password value.",
-    "Changing the proposal screen (Yes/No) behavior.",
-    "Adding new images or altering the romantic theme beyond what is required to remove the third image and improve perceived loading speed."
+    "Do not integrate third-party URL shortener APIs or services inside the app.",
+    "Do not change existing Valentine proposal content, password value, or the YesTapSequence step content/ordering unless explicitly requested later.",
+    "Do not add authentication or any backend persistence."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

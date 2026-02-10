@@ -1,5 +1,7 @@
 import { Heart } from 'lucide-react';
 import { ReactNode } from 'react';
+import { CopyShareLinkAction } from './CopyShareLinkAction';
+import { AdminLinkNotice } from './AdminLinkNotice';
 
 interface RomanticSceneLayoutProps {
   children: ReactNode;
@@ -25,6 +27,16 @@ export function RomanticSceneLayout({ children }: RomanticSceneLayoutProps) {
         <Heart className="absolute top-[60%] right-[10%] w-8 h-8 text-rose-300/60 animate-float-slow" style={{ animationDelay: '2.5s' }} />
         <Heart className="absolute top-[50%] left-[40%] w-5 h-5 text-pink-400/40 animate-float-fast" style={{ animationDelay: '3s' }} />
         <Heart className="absolute bottom-[40%] right-[35%] w-6 h-6 text-rose-400/50 animate-float-medium" style={{ animationDelay: '3.5s' }} />
+      </div>
+
+      {/* Top overlay controls - positioned to not interfere with tap interactions */}
+      <div className="absolute top-4 left-4 right-4 z-50 flex flex-col gap-3 items-start pointer-events-none">
+        <div className="pointer-events-auto">
+          <AdminLinkNotice />
+        </div>
+        <div className="pointer-events-auto">
+          <CopyShareLinkAction />
+        </div>
       </div>
 
       {/* Content */}

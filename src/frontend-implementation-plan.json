@@ -1,59 +1,69 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Simplify Yes tap sequence and preload images for instant transitions",
+  "title": "In-app Copy Share Link with hash stripping and admin-link notice",
   "requirements": [
     {
-      "id": "REQ-22",
-      "summary": "Remove the third post-\"Yes\" image step so the sequence is: WA0002 image → WA0000 image → final love message text, and keep looping + keyboard accessibility.",
+      "id": "REQ-27",
+      "summary": "Implement a “Copy Share Link” action that copies the current URL without any hash fragment (including caffeineAdminToken).",
       "acceptanceCriteria": [
-        "After tapping \"Yes\", the user sees IMG-20260210-WA0002.jpg first.",
-        "On tap, the next step shows IMG-20260210-WA0000.jpg.",
-        "On tap, the next step shows the final love message text (no third image is shown anywhere in the sequence).",
-        "On tap of the final message step, the sequence loops back to IMG-20260210-WA0002.jpg and can repeat indefinitely.",
-        "Keyboard accessibility remains functional (Enter/Space advances; final step loops)."
+        "When the app is opened with a URL containing a hash fragment like “#caffeineAdminToken=…”, the “Copy Share Link” action copies the same URL without any hash fragment (e.g., “https://…/”).",
+        "The “Copy Share Link” action works on iPad Chrome (touch) and desktop browsers.",
+        "After copying, the UI shows a brief confirmation message in English (e.g., “Link copied”).",
+        "The copied link does not include the caffeineAdminToken value."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/YesTapSequence.tsx",
-          "operation": "modify",
-          "description": "Update the step logic and rendering to remove the IMG-20260210-WA0001.jpg step, leaving only two image steps (Step 1: /assets/IMG-20260210-WA0002.jpg, Step 2: /assets/IMG-20260210-WA0000.jpg) followed by the existing final love message text as the last step; keep looping behavior so tapping the final message returns to Step 1. Ensure keyboard accessibility works for the sequence (Enter/Space advances and loops on the final step), e.g., by making each step focusable and handling keydown consistently."
-        }
-      ]
-    },
-    {
-      "id": "REQ-23",
-      "summary": "Preload the two remaining sequence images to make tap transitions feel instant (no visible loading delay).",
-      "acceptanceCriteria": [
-        "On a normal iPad Chrome connection, tapping to advance between steps does not show a blank/loading state while the next image downloads.",
-        "Both images are requested early (e.g., during/after entering the success view) so the next step displays immediately on tap.",
-        "No new backend endpoints or network calls are introduced for image delivery (images remain static frontend assets)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/YesTapSequence.tsx",
-          "operation": "modify",
-          "description": "Add client-side preloading for /assets/IMG-20260210-WA0002.jpg and /assets/IMG-20260210-WA0000.jpg (e.g., via an effect on component mount that creates Image objects or equivalent) so both images are requested as soon as the post-\"Yes\" view is entered and transitions between steps show immediately without a blank/loading state."
-        }
-      ]
-    },
-    {
-      "id": "REQ-24",
-      "summary": "Remove the unused third image asset (IMG-20260210-WA0001.jpg) from public assets (if present) and eliminate any remaining code references.",
-      "acceptanceCriteria": [
-        "There are no code references to /assets/IMG-20260210-WA0001.jpg.",
-        "If IMG-20260210-WA0001.jpg exists under the frontend public assets, it is removed from the project so it is no longer shipped."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/assets/IMG-20260210-WA0001.jpg",
-          "operation": "delete",
-          "description": "Remove the unused third sequence image asset from the shipped frontend public assets if it exists."
+          "path": "frontend/src/utils/shareLink.ts",
+          "operation": "create",
+          "description": "Add frontend-only helpers to (1) compute a clean share URL by removing all hash content from the current location, and (2) copy text to clipboard with a safe fallback for browsers where navigator.clipboard is unavailable (to support iPad Chrome and desktop). Ensure no code ever logs/returns/displays the caffeineAdminToken value; only the clean URL is copied."
         },
         {
-          "path": "frontend/src/components/YesTapSequence.tsx",
+          "path": "frontend/src/components/CopyShareLinkAction.tsx",
+          "operation": "create",
+          "description": "Create a reusable “Copy Share Link” UI control that uses the shadcn-ui Button component to trigger copying the clean URL and to show a brief English confirmation message (e.g., “Link copied”) via an inline, non-blocking status region (aria-live). Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-28",
+      "summary": "Surface “Copy Share Link” on PasswordGate, proposal view, and YesTapSequence without interfering with tap-to-advance interactions.",
+      "acceptanceCriteria": [
+        "A user can find and use “Copy Share Link” from the PasswordGate screen, the main proposal screen, and the YesTapSequence screen.",
+        "The control does not block or capture taps intended for the YesTapSequence step-advance area (tapping the sequence content still advances as before).",
+        "All user-facing labels for this control are in English and accessible (button has an aria-label that matches visible text)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/RomanticSceneLayout.tsx",
           "operation": "modify",
-          "description": "Remove any remaining references to /assets/IMG-20260210-WA0001.jpg in the post-\"Yes\" tap sequence so the third image is not used anywhere."
+          "description": "Wire the new CopyShareLinkAction into the shared layout so it appears on all main screens that use RomanticSceneLayout (PasswordGate, proposal view, YesTapSequence). Position it in a clearly accessible overlay (e.g., top corner) with appropriate z-index and minimal hit area so it does not obstruct the YesTapSequence tap-to-advance region. Ensure the visible label is “Copy Share Link” and the aria-label matches exactly."
+        }
+      ]
+    },
+    {
+      "id": "REQ-29",
+      "summary": "Show a small non-blocking English notice when the URL hash contains caffeineAdminToken, without revealing the token.",
+      "acceptanceCriteria": [
+        "When “caffeineAdminToken” is present in the URL hash, a notice is shown on screen; when it is not present, the notice is not shown.",
+        "The notice text is in English and does not reveal or display the token value.",
+        "The notice does not prevent interaction with existing UI controls (password entry, Yes/No buttons, tap-through sequence)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useAdminLinkNotice.ts",
+          "operation": "create",
+          "description": "Add a lightweight hook that detects whether window.location.hash contains “caffeineAdminToken” and updates reactively on hash changes (e.g., via the hashchange event), exposing a boolean only (never the token value)."
+        },
+        {
+          "path": "frontend/src/components/AdminLinkNotice.tsx",
+          "operation": "create",
+          "description": "Create a small, non-blocking notice component that uses useAdminLinkNotice to conditionally render an English message warning the current link is an admin link and advising to use “Copy Share Link” to share a safe link; ensure it never displays the token value and does not capture/steal taps from existing interactions."
+        },
+        {
+          "path": "frontend/src/components/RomanticSceneLayout.tsx",
+          "operation": "modify",
+          "description": "Wire AdminLinkNotice into the same shared layout overlay area as the share action (e.g., near the top) so it appears on PasswordGate, proposal view, and YesTapSequence when applicable, while remaining non-blocking and not interfering with tap-to-advance interactions."
         }
       ]
     }

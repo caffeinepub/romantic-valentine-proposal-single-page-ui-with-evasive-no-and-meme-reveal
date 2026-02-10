@@ -2,10 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-post-yes-looping-tap-sequence-component-frontend-src-components-yestapsequence-tsx-to-remove-the-third-image-step-so-the-sequence-contains-only-step-1-img-20260210-wa0002-jpg-step-2-img-20260210-wa0000-jpg-step-3-the-existing-final-love-message-text-keep-the-looping-behavior-so-tapping-the-final-message-returns-to-step-1",
-      "featureTitle": "Update the post-\"Yes\" looping tap sequence component (frontend/src/components/YesTapSequence.tsx) to remove the third image step so the sequence contains only: Step 1 = IMG-20260210-WA0002.jpg, Step 2 = IMG-20260210-WA0000.jpg, Step 3 = the existing final love message text. Keep the looping behavior so tapping the final message returns to Step 1.",
+      "featureId": "feature-add-an-in-app-copy-share-link-action-that-copies-a-clean-url-for-sharing-by-removing-the-caffeineadmintoken-fragment-and-any-other-hash-content-from-the-current-page-url-before-copying",
+      "featureTitle": "Add an in-app “Copy Share Link” action that copies a clean URL for sharing by removing the “#caffeineAdminToken=…” fragment (and any other hash content) from the current page URL before copying.",
       "files": [
-        "frontend/src/components/YesTapSequence.tsx"
+        "frontend/src/components/CopyShareLinkAction.tsx",
+        "frontend/src/utils/shareLink.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -15,15 +16,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-22"
+        "REQ-27"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-post-yes-tap-transitions-feel-instant-by-preloading-the-remaining-sequence-images-img-20260210-wa0002-jpg-and-img-20260210-wa0000-jpg-before-the-user-reaches-them-so-there-is-no-visible-loading-delay-when-the-user-taps-to-advance",
-      "featureTitle": "Ensure the post-\"Yes\" tap transitions feel instant by preloading the remaining sequence images (IMG-20260210-WA0002.jpg and IMG-20260210-WA0000.jpg) before the user reaches them, so there is no visible loading delay when the user taps to advance.",
+      "featureId": "feature-surface-the-copy-share-link-action-in-a-clearly-accessible-place-on-all-main-app-screens-passwordgate-view-proposal-view-and-yestapsequence-view-without-interfering-with-existing-tap-to-advance-interactions",
+      "featureTitle": "Surface the “Copy Share Link” action in a clearly accessible place on all main app screens (PasswordGate view, proposal view, and YesTapSequence view) without interfering with existing tap-to-advance interactions.",
       "files": [
-        "frontend/src/components/YesTapSequence.tsx"
+        "frontend/src/components/RomanticSceneLayout.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -33,15 +34,17 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-23"
+        "REQ-28"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-remove-the-unused-third-image-asset-from-the-frontend-public-assets-if-it-exists-img-20260210-wa0001-jpg-and-ensure-there-are-no-remaining-references-to-it-in-the-codebase",
-      "featureTitle": "Remove the unused third image asset from the frontend public assets if it exists (IMG-20260210-WA0001.jpg) and ensure there are no remaining references to it in the codebase.",
+      "featureId": "feature-if-the-current-url-contains-caffeineadmintoken-in-the-hash-fragment-display-a-small-non-blocking-notice-in-english-informing-the-user-that-the-current-link-is-an-admin-link-and-they-should-use-copy-share-link-to-share-a-safe-link",
+      "featureTitle": "If the current URL contains “caffeineAdminToken” in the hash fragment, display a small non-blocking notice in English informing the user that the current link is an admin link and they should use “Copy Share Link” to share a safe link.",
       "files": [
-        "frontend/src/components/YesTapSequence.tsx"
+        "frontend/src/components/AdminLinkNotice.tsx",
+        "frontend/src/components/RomanticSceneLayout.tsx",
+        "frontend/src/hooks/useAdminLinkNotice.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -51,7 +54,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-24"
+        "REQ-29"
       ],
       "confidence": "high"
     }

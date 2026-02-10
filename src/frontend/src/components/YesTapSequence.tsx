@@ -44,6 +44,12 @@ export function YesTapSequence() {
           aria-label="Tap to continue"
           className="cursor-pointer animate-fade-scale-in focus:outline-none focus:ring-4 focus:ring-romantic-primary/50 rounded-3xl"
         >
+          <div className="mb-6 pointer-events-none">
+            <p className="text-2xl md:text-4xl lg:text-5xl font-bold text-romantic-primary bg-white/95 backdrop-blur-md rounded-2xl shadow-lg px-6 py-4 md:px-8 md:py-6 border-2 border-romantic-primary/30 inline-block">
+              Thank you so much for choosing me🫂🫶🏻
+            </p>
+          </div>
+          
           <div className="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-4 md:p-8 border-4 border-romantic-primary hover:shadow-romantic-primary/30 transition-shadow duration-300">
             <img
               src="/assets/IMG-20260210-WA0002.jpg"

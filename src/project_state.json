@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 19,
+  "projectStateVersion": 25,
   "summary": "Single-page romantic Valentine proposal web page for Aqsa Kousar (iPad Chrome) with Yes/No interaction (evasive No), improved romantic background and button animations/styles, optional password-protected link gate (password: 9102008, hint: \"most happiest day of the life for me\"), plus a looping multi-step Yes flow where the images in the sequence can be replaced with newly provided pictures.",
   "architectural_notes": [
     "Use a self-contained HTML/CSS/JS single-page implementation compatible with iPad Chrome.",
@@ -11,13 +11,14 @@
     "In the post-Yes looping tap sequence, ensure the animated image is step 1 and the real photo is step 2.",
     "Replace the final-step label/CTA text \"Replay\" with \"Tap again to love you more\".",
     "Remove the unintended third image from the post-Yes tap-through/looping sequence so the sequence matches the desired steps only.",
-    "Preload/cache post-Yes sequence images up-front (or at least before first display) so switching steps on tap is instantaneous on iPad Chrome."
+    "Preload/cache post-Yes sequence images up-front (or at least before first display) so switching steps on tap is instantaneous on iPad Chrome.",
+    "Update the post-Yes success message text to include emojis exactly: \"Thank you so much for choosing me🫂🫶🏻\"."
   ],
   "known_issues": [
     "Post-Yes tap sequence currently shows 3 images; user wants the third image removed.",
     "Post-Yes image transitions currently show loading delay; images should appear instantly on tap."
   ],
-  "isFixRequest": true,
+  "isFixRequest": false,
   "existing_features": [
     {
       "id": "feature-create-a-single-page-romantic-valentine-proposal-ui-addressed-to-aqsa-kousar-that-asks-aqsa-kousar-will-you-be-my-valentine-and-presents-two-large-buttons-yes-and-no",
@@ -194,6 +195,46 @@
         "REQ-24"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-when-the-user-taps-clicks-the-yes-button-and-transitions-into-the-accepted-success-flow-the-yestapsequence-view-display-an-english-message-that-says-thank-you-so-much-for-choosing-me-the-message-must-be-clearly-visible-on-ipad-chrome-in-the-success-view-without-blocking-the-existing-tap-to-advance-interaction-of-the-looping-sequence",
+      "title": "When the user taps/clicks the “Yes! 💕” button and transitions into the accepted/success flow (the YesTapSequence view), display an English message that says: \"Thank you so much for choosing me\". The message must be clearly visible on iPad Chrome in the success view without blocking the existing tap-to-advance interaction of the looping sequence.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-thank-you-message-displayed-in-the-yestapsequence-success-view-step-1-to-match-the-user-s-requested-english-text-including-emojis-exactly-thank-you-so-much-for-choosing-me",
+      "title": "Update the thank-you message displayed in the YesTapSequence success view (step 1) to match the user’s requested English text including emojis exactly: \"Thank you so much for choosing me🫂🫶🏻\".",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-in-app-copy-share-link-action-that-copies-a-clean-url-for-sharing-by-removing-the-caffeineadmintoken-fragment-and-any-other-hash-content-from-the-current-page-url-before-copying",
+      "title": "Add an in-app “Copy Share Link” action that copies a clean URL for sharing by removing the “#caffeineAdminToken=…” fragment (and any other hash content) from the current page URL before copying.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-surface-the-copy-share-link-action-in-a-clearly-accessible-place-on-all-main-app-screens-passwordgate-view-proposal-view-and-yestapsequence-view-without-interfering-with-existing-tap-to-advance-interactions",
+      "title": "Surface the “Copy Share Link” action in a clearly accessible place on all main app screens (PasswordGate view, proposal view, and YesTapSequence view) without interfering with existing tap-to-advance interactions.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-if-the-current-url-contains-caffeineadmintoken-in-the-hash-fragment-display-a-small-non-blocking-notice-in-english-informing-the-user-that-the-current-link-is-an-admin-link-and-they-should-use-copy-share-link-to-share-a-safe-link",
+      "title": "If the current URL contains “caffeineAdminToken” in the hash fragment, display a small non-blocking notice in English informing the user that the current link is an admin link and they should use “Copy Share Link” to share a safe link.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -288,6 +329,12 @@
     {
       "id": "AR-15",
       "summary": "Ensure post-Yes tap-through images appear instantly on tap by preloading/caching them (avoid visible loading delays)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Update the post-Yes success flow to display a message like \"thank you so much for choosing me\" when she taps Yes",
       "reqIds": [],
       "status": "pending"
     }
