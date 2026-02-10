@@ -1,69 +1,70 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "In-app Copy Share Link with hash stripping and admin-link notice",
+  "title": "Remove Copy Share Link UI and related notices (v12)",
   "requirements": [
     {
-      "id": "REQ-27",
-      "summary": "Implement a “Copy Share Link” action that copies the current URL without any hash fragment (including caffeineAdminToken).",
+      "id": "REQ-30",
+      "summary": "Remove the in-app “Copy Share Link” control from all main screens by eliminating its rendering from the shared layout.",
       "acceptanceCriteria": [
-        "When the app is opened with a URL containing a hash fragment like “#caffeineAdminToken=…”, the “Copy Share Link” action copies the same URL without any hash fragment (e.g., “https://…/”).",
-        "The “Copy Share Link” action works on iPad Chrome (touch) and desktop browsers.",
-        "After copying, the UI shows a brief confirmation message in English (e.g., “Link copied”).",
-        "The copied link does not include the caffeineAdminToken value."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/utils/shareLink.ts",
-          "operation": "create",
-          "description": "Add frontend-only helpers to (1) compute a clean share URL by removing all hash content from the current location, and (2) copy text to clipboard with a safe fallback for browsers where navigator.clipboard is unavailable (to support iPad Chrome and desktop). Ensure no code ever logs/returns/displays the caffeineAdminToken value; only the clean URL is copied."
-        },
-        {
-          "path": "frontend/src/components/CopyShareLinkAction.tsx",
-          "operation": "create",
-          "description": "Create a reusable “Copy Share Link” UI control that uses the shadcn-ui Button component to trigger copying the clean URL and to show a brief English confirmation message (e.g., “Link copied”) via an inline, non-blocking status region (aria-live). Verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-28",
-      "summary": "Surface “Copy Share Link” on PasswordGate, proposal view, and YesTapSequence without interfering with tap-to-advance interactions.",
-      "acceptanceCriteria": [
-        "A user can find and use “Copy Share Link” from the PasswordGate screen, the main proposal screen, and the YesTapSequence screen.",
-        "The control does not block or capture taps intended for the YesTapSequence step-advance area (tapping the sequence content still advances as before).",
-        "All user-facing labels for this control are in English and accessible (button has an aria-label that matches visible text)."
+        "No button/control labeled \"Copy Share Link\" is visible anywhere in the app UI (PasswordGate, proposal screen, or YesTapSequence).",
+        "There is no remaining interactive element whose accessible name/aria-label is \"Copy Share Link\"."
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/RomanticSceneLayout.tsx",
           "operation": "modify",
-          "description": "Wire the new CopyShareLinkAction into the shared layout so it appears on all main screens that use RomanticSceneLayout (PasswordGate, proposal view, YesTapSequence). Position it in a clearly accessible overlay (e.g., top corner) with appropriate z-index and minimal hit area so it does not obstruct the YesTapSequence tap-to-advance region. Ensure the visible label is “Copy Share Link” and the aria-label matches exactly."
+          "description": "Remove rendering of the CopyShareLinkAction from the shared layout overlay so it no longer appears on PasswordGate, the proposal view, or the YesTapSequence success view; also remove the associated import and any now-unneeded wrapper markup for that control."
         }
       ]
     },
     {
-      "id": "REQ-29",
-      "summary": "Show a small non-blocking English notice when the URL hash contains caffeineAdminToken, without revealing the token.",
+      "id": "REQ-31",
+      "summary": "Remove the admin-link warning notice and any user-facing text that references “Copy Share Link”.",
       "acceptanceCriteria": [
-        "When “caffeineAdminToken” is present in the URL hash, a notice is shown on screen; when it is not present, the notice is not shown.",
-        "The notice text is in English and does not reveal or display the token value.",
-        "The notice does not prevent interaction with existing UI controls (password entry, Yes/No buttons, tap-through sequence)."
+        "When the URL contains a caffeineAdminToken hash fragment, no admin-link notice is displayed.",
+        "No user-facing text in the app contains the phrase \"Copy Share Link\"."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/hooks/useAdminLinkNotice.ts",
-          "operation": "create",
-          "description": "Add a lightweight hook that detects whether window.location.hash contains “caffeineAdminToken” and updates reactively on hash changes (e.g., via the hashchange event), exposing a boolean only (never the token value)."
+          "path": "frontend/src/components/RomanticSceneLayout.tsx",
+          "operation": "modify",
+          "description": "Stop rendering the AdminLinkNotice in the shared layout overlay so no notice appears even when the URL hash contains caffeineAdminToken."
         },
         {
           "path": "frontend/src/components/AdminLinkNotice.tsx",
-          "operation": "create",
-          "description": "Create a small, non-blocking notice component that uses useAdminLinkNotice to conditionally render an English message warning the current link is an admin link and advising to use “Copy Share Link” to share a safe link; ensure it never displays the token value and does not capture/steal taps from existing interactions."
+          "operation": "delete",
+          "description": "Remove the AdminLinkNotice component (it contains user-facing \"Copy Share Link\" text) so it cannot be rendered or referenced."
+        }
+      ]
+    },
+    {
+      "id": "REQ-32",
+      "summary": "Clean up unused share-link code and remove remaining references/imports to the removed components/utilities; ensure frontend builds cleanly.",
+      "acceptanceCriteria": [
+        "`frontend` compiles successfully with no TypeScript errors introduced by removing the share-link feature.",
+        "There are no remaining references/imports to the removed share-link UI components in the codebase."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/CopyShareLinkAction.tsx",
+          "operation": "delete",
+          "description": "Remove the CopyShareLinkAction component entirely after it is no longer rendered anywhere."
+        },
+        {
+          "path": "frontend/src/utils/shareLink.ts",
+          "operation": "delete",
+          "description": "Remove share-link utility functions that were only used by the removed CopyShareLinkAction."
+        },
+        {
+          "path": "frontend/src/hooks/useAdminLinkNotice.ts",
+          "operation": "delete",
+          "description": "Remove the admin-token detection hook after AdminLinkNotice is removed to avoid unused code and ensure the frontend builds without unused-import/TS errors."
         },
         {
           "path": "frontend/src/components/RomanticSceneLayout.tsx",
           "operation": "modify",
-          "description": "Wire AdminLinkNotice into the same shared layout overlay area as the share action (e.g., near the top) so it appears on PasswordGate, proposal view, and YesTapSequence when applicable, while remaining non-blocking and not interfering with tap-to-advance interactions."
+          "description": "Ensure all imports/references to CopyShareLinkAction and AdminLinkNotice are removed so the file compiles cleanly after deletions."
         }
       ]
     }

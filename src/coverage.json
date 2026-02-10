@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T00:10:54.339Z",
+  "generatedAt": "2026-02-10T00:21:02.550Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -11,21 +11,8 @@
     "implemented": 3,
     "items": [
       {
-        "id": "REQ-27",
-        "summary": "Add an in-app “Copy Share Link” action that copies a clean URL for sharing by removing the “#caffeineAdminToken=…” fragment (and any other hash content) from the current page URL before copying.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/utils/shareLink.ts",
-          "frontend/src/components/CopyShareLinkAction.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/utils/shareLink.ts",
-          "frontend/src/components/CopyShareLinkAction.tsx"
-        ]
-      },
-      {
-        "id": "REQ-28",
-        "summary": "Surface the “Copy Share Link” action in a clearly accessible place on all main app screens (PasswordGate view, proposal view, and YesTapSequence view) without interfering with existing tap-to-advance interactions.",
+        "id": "REQ-30",
+        "summary": "Remove the in-app “Copy Share Link” control from all main app screens by eliminating its rendering from the shared layout so it no longer appears on the PasswordGate view, the Valentine proposal view, or the YesTapSequence success view.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/components/RomanticSceneLayout.tsx"
@@ -35,17 +22,32 @@
         ]
       },
       {
-        "id": "REQ-29",
-        "summary": "If the current URL contains “caffeineAdminToken” in the hash fragment, display a small non-blocking notice in English informing the user that the current link is an admin link and they should use “Copy Share Link” to share a safe link.",
+        "id": "REQ-31",
+        "summary": "Remove the admin-link warning notice that instructs users to use “Copy Share Link”, and ensure no user-facing text anywhere references “Copy Share Link”.",
         "status": "implemented",
         "plannedFiles": [
+          "frontend/src/components/RomanticSceneLayout.tsx",
+          "frontend/src/components/AdminLinkNotice.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/RomanticSceneLayout.tsx",
+          "frontend/src/components/AdminLinkNotice.tsx"
+        ]
+      },
+      {
+        "id": "REQ-32",
+        "summary": "Clean up unused share-link code after removing the UI: ensure there are no remaining imports/references to CopyShareLinkAction, AdminLinkNotice, or the share-link utility functions that were only used for this feature, and the frontend builds without warnings/errors related to unused code.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/CopyShareLinkAction.tsx",
+          "frontend/src/utils/shareLink.ts",
           "frontend/src/hooks/useAdminLinkNotice.ts",
-          "frontend/src/components/AdminLinkNotice.tsx",
           "frontend/src/components/RomanticSceneLayout.tsx"
         ],
         "matchedFiles": [
+          "frontend/src/components/CopyShareLinkAction.tsx",
+          "frontend/src/utils/shareLink.ts",
           "frontend/src/hooks/useAdminLinkNotice.ts",
-          "frontend/src/components/AdminLinkNotice.tsx",
           "frontend/src/components/RomanticSceneLayout.tsx"
         ]
       }

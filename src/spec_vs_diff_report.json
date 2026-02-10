@@ -1,21 +1,42 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T00:10:54.336Z",
-  "summary": "Implemented frontend-only clean share link generation/copying (removes all URL hash content), added a reusable “Copy Share Link” button with a brief confirmation message, and added an admin-link notice that appears when the URL hash contains “caffeineAdminToken”. Overlay placement in RomanticSceneLayout uses pointer-events settings intended to avoid interfering with tap interactions. However, the diff does not confirm that these controls are surfaced on all required main screens (PasswordGate, proposal, YesTapSequence).",
+  "generatedAt": "2026-02-10T00:21:02.547Z",
+  "summary": "RomanticSceneLayout appears to have been updated to no longer render any share-link/admin-notice UI, but the share-link feature code (AdminLinkNotice, CopyShareLinkAction, shareLink utilities, and useAdminLinkNotice) still exists and there is no clear evidence it was fully removed/cleaned or that all “Copy Share Link” text/notice behavior is gone.",
   "missing_requirements": [
     {
-      "id": "REQ-28",
-      "requirement": "Surface the “Copy Share Link” action in a clearly accessible place on all main app screens (PasswordGate view, proposal view, and YesTapSequence view) without interfering with existing tap-to-advance interactions.",
-      "reason": "The diff shows the controls were added to RomanticSceneLayout, but there is no evidence in the provided diff summary that PasswordGate, proposal view, and YesTapSequence actually render within RomanticSceneLayout (or otherwise include the action) on all those screens.",
+      "id": "REQ-31",
+      "requirement": "Remove the admin-link warning notice that instructs users to use “Copy Share Link”, and ensure no user-facing text anywhere references “Copy Share Link”.",
+      "reason": "The diff summary shows AdminLinkNotice.tsx is still present/modified, and the provided file summary states it conditionally displays a warning advising users to use the share link feature. There’s no evidence in the diff summary that the notice rendering and all “Copy Share Link” user-facing text were eliminated.",
       "evidence": [
-        "frontend/src/components/RomanticSceneLayout.tsx",
-        "frontend-file-summaries.txt (no concrete diff shown for PasswordGate/proposal/YesTapSequence to confirm inclusion)"
+        "frontend/src/components/AdminLinkNotice.tsx",
+        "frontend-file-summaries.txt",
+        "frontend/src/hooks/useAdminLinkNotice.ts"
+      ]
+    },
+    {
+      "id": "REQ-32",
+      "requirement": "Clean up unused share-link code after removing the UI: ensure there are no remaining imports/references to CopyShareLinkAction, AdminLinkNotice, or the share-link utility functions that were only used for this feature.",
+      "reason": "CopyShareLinkAction.tsx, AdminLinkNotice.tsx, useAdminLinkNotice.ts, and utils/shareLink.ts are still present and modified, and the file summary still describes share-link utilities and components. There is no evidence in the diff summary that these were removed or that references/imports were fully cleaned up.",
+      "evidence": [
+        "frontend/src/components/CopyShareLinkAction.tsx",
+        "frontend/src/components/AdminLinkNotice.tsx",
+        "frontend/src/hooks/useAdminLinkNotice.ts",
+        "frontend/src/utils/shareLink.ts",
+        "frontend-file-summaries.txt"
       ]
     }
   ],
-  "hallucinated_features": [],
-  "confidence": 0.64,
+  "hallucinated_features": [
+    {
+      "description": "Added/expanded always-visible floating-hearts background elements and related layout visual complexity in RomanticSceneLayout beyond what’s strictly required to remove share-link/admin-notice UI.",
+      "reason": "The BuildRequest explicitly says not to change romantic theme styling/background/animations except as required to remove the share-link/admin-notice UI, but RomanticSceneLayout contains detailed floating hearts markup and comments indicating always-visible hearts.",
+      "evidence": [
+        "frontend/src/components/RomanticSceneLayout.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.68,
   "changed_files": [
     "frontend-file-summaries.txt",
     "frontend/src/components/AdminLinkNotice.tsx",
